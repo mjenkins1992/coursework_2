@@ -4,7 +4,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                app = docker.build("getintodevops/hellonode")
+                script {
+                    app = docker.build("coursework2")
+                }
             }
         }
 	stage('Sonarqube') {
