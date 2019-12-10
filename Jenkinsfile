@@ -13,7 +13,7 @@ pipeline {
                 }
             }
         }
-	stage('Sonarqube') {
+	stage('Sonarqube Testing') {
             environment {
                 scannerHome = tool 'SonarQubeScanner'
             }
@@ -23,9 +23,9 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
+        stage('Deploy') {
             steps {
-                echo 'Testing..'
+                sh "ansible-playbook ./ansible/deploy.yml --extra-vars imageTag=${env.BUILD_NUMBER}"
             }
         }
     }
