@@ -1,4 +1,10 @@
 def app
+def remote = [:]
+remote.name = 'vm'
+remote.host = '168.63.242.99'
+remote.user = 'azureuser'
+remote.password = ''
+remote.allowAnyHosts = true
 pipeline {
     agent any
     stages {
@@ -25,9 +31,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh "ssh azureuser@168.63.242.99"
-                sh "kubectl scale deployments/coursework2 --replicas=4"
-                sh "kubectl set image deployments/coursework2 coursework2=rossn/coursework2:${env.BUILD_NUMBER}"
+                sshCommand remote: remote, command: "ls -a"
             }
         }
     }
