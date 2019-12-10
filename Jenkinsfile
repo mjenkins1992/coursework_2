@@ -25,7 +25,9 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh "ansible-playbook ./ansible/deploy.yml --extra-vars imageTag=${env.BUILD_NUMBER}"
+                sh "ssh azureuser@168.63.242.99"
+                sh "kubectl scale deployments/coursework2 --replicas=4"
+                sh "kubectl set image deployments/coursework2 coursework2=rossn/coursework2:${env.BUILD_NUMBER}"
             }
         }
     }
