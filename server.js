@@ -7,9 +7,9 @@ var host;
 var handleRequest = function(request, response) {
   response.setHeader('Content-Type', 'text/plain');
   response.writeHead(200);
-  response.write("Hello World! | Running on: ");
+  response.write("Hello devops world! | I have been deployed to kubernetes by a jenkins pipleline | Running on: ");
   response.write(host);
-  response.write(" | v=2\n");
+  response.write(" | v=3 :D\n");
   response.end("Running On:" ,host, "| Total Requests:", ++requests,"| App Uptime:", (new Date() - startTime)/1000 , "seconds", "| Log Time:",new Date());
 }
 

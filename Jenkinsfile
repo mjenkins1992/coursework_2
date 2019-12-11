@@ -8,7 +8,7 @@ remote.allowAnyHosts = true
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Build and upload to docker') {
             steps {
                 script {
                     app = docker.build("rossn/coursework2")
@@ -29,12 +29,11 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        stage('Deploy to kubernetes') {
             steps {
                 sshCommand remote: remote, command: "curl \$(minikube ip):31508"
                 sshCommand remote: remote, command: "kubectl scale deployments/coursework2 --replicas=8"
                 sshCommand remote: remote, command: "kubectl set image deployments/coursework2 coursework2=rossn/coursework2:${env.BUILD_NUMBER}"
-                sshCommand remote: remote, command: "curl \$(minikube ip):31508"
                 sshCommand remote: remote, command: "./checkDeployment.sh"
                 sshCommand remote: remote, command: "curl \$(minikube ip):31508"
             }
