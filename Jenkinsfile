@@ -31,7 +31,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sshCommand remote: remote, command: "ls -a"
+                sshCommand remote: remote, command: "kubectl scale deployments/coursework2 --replicas=4"
+                sshCommand remote: remote, command: "kubectl set image deployments/coursework2 coursework2=rossn/coursework2:${env.BUILD_NUMBER}"
             }
         }
     }
