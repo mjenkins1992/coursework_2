@@ -3,7 +3,7 @@ def remote = [:]
 remote.name = 'vm'
 remote.host = '168.63.242.99'
 remote.user = 'azureuser'
-remote.password = ''
+remote.password = 'Password12345'
 remote.allowAnyHosts = true
 pipeline {
     agent any
@@ -31,11 +31,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sshagent(credentials : ['vm_ssh']) {
-                    sh 'ls -a'
-                    sh 'ssh -tt azureuser@168.63.242.99'
-                    sh 'ls -a'
-                }
+                sshCommand remote: remote, command: "ls -a"
             }
         }
     }
