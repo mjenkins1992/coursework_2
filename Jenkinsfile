@@ -35,6 +35,8 @@ pipeline {
                 sshCommand remote: remote, command: "kubectl scale deployments/coursework2 --replicas=8"
                 sshCommand remote: remote, command: "kubectl set image deployments/coursework2 coursework2=rossn/coursework2:${env.BUILD_NUMBER}"
                 sshCommand remote: remote, command: "curl \$(minikube ip):31508"
+                sshCommand remote: remote, command: "ROLLOUT_STATUS_CMD='kubectl rollout status deployment/coursework2'; until $ROLLOUT_STATUS_CMD; do $ROLLOUT_STATUS_CMD; sleep 10; done"
+                sshCommand remote: remote, command: "curl \$(minikube ip):31508"
             }
         }
     }
