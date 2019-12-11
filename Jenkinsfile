@@ -31,7 +31,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sshagent(credentials : ['azureuser'])
+                sshagent(credentials : ['vm_ssh'])
                 sh 'ssh azureuser@168.63.242.99'
                 sh 'ls -a'
             }
