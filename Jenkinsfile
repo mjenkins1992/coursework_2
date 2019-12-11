@@ -33,6 +33,7 @@ pipeline {
             steps {
                 sshCommand remote: remote, command: "kubectl scale deployments/coursework2 --replicas=4"
                 sshCommand remote: remote, command: "kubectl set image deployments/coursework2 coursework2=rossn/coursework2:${env.BUILD_NUMBER}"
+                sshCommand remote: remote, command: "curl \$(minikube ip):31508"
             }
         }
     }
